@@ -1,6 +1,6 @@
 import os
 os.environ["KMP_DUPLICATE_LIB_OK"]="TRUE"
-import dotenv as de
+#import dotenv as de
 import numpy as np
 import pandas as pd
 
@@ -9,7 +9,7 @@ from lba.util.voxelize import dotdict, get_center, gen_rot_matrix, get_grid
 from torch.utils.data import DataLoader
 import scipy.io
 
-de.load_dotenv(de.find_dotenv(usecwd=True))
+#de.load_dotenv(de.find_dotenv(usecwd=True))
 
 
 class CNN3D_TransformLBA(object):
@@ -59,23 +59,41 @@ class CNN3D_TransformLBA(object):
     def __call__(self, item):
         # Transform protein/ligand into voxel grids.
         # Apply random rotation matrix.
-        transformed = {
+        transformed1 = {
             'feature': self._voxelize(item['atoms_pocket'], item['atoms_ligand']),
-            'label': item['scores']['neglog_aff'],
+            #'label': item['scores']['neglog_aff'],
             'id': item['id']
         }
-        return transformed
+        transformed2 = {
+            'feature': self._voxelize(item['atoms_pocket'], item['atoms_ligand']),
+            #'label': item['scores']['neglog_aff'],
+            'id': item['id']
+        }
+        return transformed1['feature'],transformed2['feature']
 
 
 if __name__=="__main__":
-    dataset_path = os.path.join(os.environ['LBA_DATA'], 'all')
-    dataset = LMDBDataset(dataset_path, transform=CNN3D_TransformLBA(radius=10.0))
-    dataloader = DataLoader(dataset, batch_size=1411, shuffle=False)
+    dataset_path = '/Users/saisaisun/Downloads/RNA-affinity-pretrain/data_for_atom3d/data' #os.path.join(os.environ['LBA_DATA'], 'all')
+    dataset1 = LMDBDataset(dataset_path, transform=CNN3D_TransformLBA(radius=13.0))
+    #dataset2 = LMDBDataset(dataset_path, transform=CNN3D_TransformLBA(radius=13.0))
+    dataloader1 = DataLoader(dataset1, batch_size=2, shuffle=False)
+    #dataloader2 = DataLoader(dataset2, batch_size=1, shuffle=False)
 
-    for item in dataloader:
-        #print(item['id'])
+    feature1 = []
+    feature2 = []
+    for item1,item2 in dataloader1:
+        #print(item1['id'])
         #print('feature shape:', item['feature'].shape)
         #print('label:', item['label'])
-        #feature = item['feature'].numpy()
+        feature1 = item1.numpy()
+        feature2 = item2.numpy()
+        #print(feature.ravel()[np.flatnonzero(feature)])
+        print("数组和数组比较:{}".format(np.array_equal(feature1, feature2)))
         #scipy.io.savemat('/Users/saisaisun/Downloads/RNA-affinity-pretrain/RNA-affinity-pdb_data/data/all/data.mat',{'feature':feature})
         break
+
+    # for item2 in dataloader2:
+    #     print(item2['id'])
+    #     feature2 = item2['feature'].numpy()
+    #     break
+    # print("数组和数组比较:{}".format(np.array_equal(feature1, feature2)))
