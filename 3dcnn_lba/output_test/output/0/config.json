@@ -1,0 +1,13 @@
+{
+    "data_dir": "data",
+    "output_dir": "output_test/output/0",
+    "unobserved": false,
+    "learning_rate": 0.0001,
+    "conv_drop_rate": 0.1,
+    "fc_drop_rate": 0.25,
+    "num_conv": 4,
+    "batch_norm": false,
+    "no_dropout": false,
+    "batch_size": 20,
+    "random_seed": 4435544
+}
