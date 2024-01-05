@@ -26,6 +26,7 @@ run ‘process_pdbbind.py receptor_dir ligand_dir --out_dir output_dir’
 run ‘prepare_lmdb.py input_file_path output_path -s --train_txt  data/train_list.txt --val_txt data/val_list.txt --test_txt data/test_list.txt --score_path data/input_label/pdbbind_NL_cleaned.csv’
 4.	Re-train and test model.
 Run ‘train.py --data_dir data --mode test --output_dir output_train’
+
 Only do predictions:
 1.	Prepare testing data.
 run ‘process_pdbbind.py receptor_dir ligand_dir --out_dir output_dir’
