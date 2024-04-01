@@ -30,6 +30,17 @@ def find_files(path, suffix, relative=None):
     name_list.sort()
     return [Path(x) for x in name_list]
 
+def get_ligand_code(path):
+    """
+    Extract 4-character PDB ID code from full path.
+
+    :param path: Path to PDB file.
+    :type path: str
+
+    :return: PDB filename.
+    :rtype: str
+    """
+    return str(path).split('/')[-1][5:-4]
 
 def get_pdb_code(path):
     """
