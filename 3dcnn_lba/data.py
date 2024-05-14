@@ -4,8 +4,8 @@ import dotenv as de
 import numpy as np
 import pandas as pd
 
-from atom3d.datasets import LMDBDataset
-from atom3d.util.voxelize import dotdict, get_center, gen_rot_matrix, get_grid
+from lba.datasets import LMDBDataset
+from lba.util.voxelize import dotdict, get_center, gen_rot_matrix, get_grid
 from torch.utils.data import DataLoader
 import scipy.io
 
