@@ -73,7 +73,7 @@ class CNN3D_TransformLBA(object):
 
 
 if __name__=="__main__":
-    dataset_path = '/Users/saisaisun/Downloads/RNA-affinity-pretrain/data_for_atom3d/data' #os.path.join(os.environ['LBA_DATA'], 'all')
+    dataset_path = '/Users/saisaisun/Downloads/RNA-affinity-pretrain/data' #os.path.join(os.environ['LBA_DATA'], 'all')
     dataset1 = LMDBDataset(dataset_path, transform=CNN3D_TransformLBA(radius=20.0))
     #dataset2 = LMDBDataset(dataset_path, transform=CNN3D_TransformLBA(radius=20.0))
     dataloader1 = DataLoader(dataset1, batch_size=2, shuffle=False)
